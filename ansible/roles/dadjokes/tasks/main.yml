@@ -18,9 +18,12 @@
     url: https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz
     dest: /tmp/go1.19.3.linux-amd64.tar.gz
     
+- name: install golang
+  unarchive:
+    src: /tmp/go1.19.3.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
 
-
-# curl -O https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz
 
 # Next add go installation
 # add go code to files dir and add ansible to deploy go code to the vm
