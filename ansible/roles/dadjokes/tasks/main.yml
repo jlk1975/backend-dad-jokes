@@ -4,14 +4,18 @@
   group:
     name: gpgroup
     state: present
+
 - name: Add the user "gpuser"  
   user:
     name: gpuser
     state: present
     comment: General Purpose User
     group: gpgroup
-    shell: /sbin/nologin
-    create_home: no
+
+- name: Add go to .profile for gpuser
+  copy: 
+    src: gpuser_profile
+    dest: /home/gpuser/.profile
 
 - name: download golang
   get_url:
@@ -24,6 +28,48 @@
     dest: /usr/local
     remote_src: yes
 
+- name: create code dir
+  file: 
+    name: /home/gpuser/gocode
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: deploy go code
+  copy: 
+    src: ../../../main.go
+    dest: /home/gpuser/gocode
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: deploy go sum
+  copy: 
+    src: ../../../go.sum
+    dest: /home/gpuser/gocode
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: deploy go mod
+  copy: 
+    src: ../../../go.mod
+    dest: /home/gpuser/gocode
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: create cronjob
+  cron:
+    name: "a job for reboot"
+    weekday: "*"
+    minute: "27"
+    hour: "10"
+    user: gpuser
+    job: "cd /home/gpuser/gocode;/usr/local/go/bin/go run /home/gpuser/gocode/main.go"
+
+# go mod init github.com/cameronldroberts/golang-api
 
 # Next add go installation
 # add go code to files dir and add ansible to deploy go code to the vm
