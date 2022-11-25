@@ -1,7 +1,0 @@
-all:
-  hosts:
-    45.79.175.228: #gpserver (linode)
-  children:
-    gp_servers:
-      hosts:
-        45.79.175.228: #gpserver01
