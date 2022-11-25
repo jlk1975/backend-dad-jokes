@@ -1,2 +1,22 @@
 ---
 # tasks file for dadjokes
+- name: Ensure group "gpgroup" exists
+  group:
+    name: gpgroup
+    state: present
+- name: Add the user "gpuser"  
+  user:
+    name: gpuser
+    state: present
+    comment: General Purpose User
+    group: gpgroup
+    shell: /sbin/nologin
+    create_home: no
+
+# Next add go installation
+# add go code to files dir and add ansible to deploy go code to the vm
+# run whatever shell commands you need to run to ensure go works and modules work
+# figure out how to export your TWILIO env vars without exposing them
+# then once everything is in place, try to run go program on the vm manually, does it work?
+# then figure out how to send to more than one phone number
+# then, add a crontab job via ansible to run the go program every evening at 8pm.

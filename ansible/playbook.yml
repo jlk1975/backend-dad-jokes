@@ -1,0 +1,4 @@
+---
+- hosts: gp_servers
+  roles:
+    - dadjokes

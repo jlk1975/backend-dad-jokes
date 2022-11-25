@@ -4,4 +4,4 @@ all:
   children:
     gp_servers:
       hosts:
-        : #gpserver01
+        45.79.175.228: #gpserver01
