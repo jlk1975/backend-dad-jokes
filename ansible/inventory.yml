@@ -1,0 +1,7 @@
+all:
+  hosts:
+    : #gpserver (linode)
+  children:
+    gp_servers:
+      hosts:
+        : #gpserver01
