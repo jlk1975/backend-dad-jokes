@@ -38,23 +38,7 @@
 
 - name: deploy go code
   copy: 
-    src: ../../../main.go
-    dest: /home/gpuser/gocode
-    owner: gpuser
-    group: gpgroup
-    mode: '0544'
-
-- name: deploy go sum
-  copy: 
-    src: ../../../go.sum
-    dest: /home/gpuser/gocode
-    owner: gpuser
-    group: gpgroup
-    mode: '0544'
-
-- name: deploy go mod
-  copy: 
-    src: ../../../go.mod
+    src: ../../../main
     dest: /home/gpuser/gocode
     owner: gpuser
     group: gpgroup
@@ -64,12 +48,10 @@
   cron:
     name: "a job for reboot"
     weekday: "*"
-    minute: "27"
+    minute: "42"
     hour: "10"
     user: gpuser
-    job: "cd /home/gpuser/gocode;/usr/local/go/bin/go run /home/gpuser/gocode/main.go"
-
-# go mod init github.com/cameronldroberts/golang-api
+    job: "/home/gpuser/gocode/main > /tmp/main.log"
 
 # Next add go installation
 # add go code to files dir and add ansible to deploy go code to the vm

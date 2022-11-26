@@ -1,4 +1,4 @@
-module github.com/cameronldroberts/golang-api
+module twilio-sms
 
 go 1.19
 

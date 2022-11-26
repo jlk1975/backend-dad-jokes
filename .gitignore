@@ -1,5 +1,7 @@
 # env file
 .env
+# binary
+main
 # Ansible
 ansible/inventory.yml
 # Local .terraform directories
