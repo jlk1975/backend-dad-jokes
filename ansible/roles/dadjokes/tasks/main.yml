@@ -28,6 +28,14 @@
     dest: /usr/local
     remote_src: yes
 
+- name: Deploy env file
+  copy: 
+    src: ../../../.env
+    dest: /home/gpuser/gocode/.env
+    owner: gpuser
+    group: gpgroup
+    mode: '0400'
+
 - name: create code dir
   file: 
     name: /home/gpuser/gocode
