@@ -38,25 +38,58 @@ type Response struct {
 	fmt.Printf("API Response as struct %+v\n", responseObject)
 	fmt.Printf(responseObject.Joke)
 
-   // call SMS 
-   sms(responseObject.Joke)
+    
+   // call SMS for jason
+   sms_jason(responseObject.Joke)
+   // call SMS for carson
+   sms_carson(responseObject.Joke)
+   // call SMS for heather
+   sms_heather(responseObject.Joke)
    }
 
-   
-   func sms(jokemsg string) {
+   func sms_jason(jokemsg string) {
 	// SMS stuff
 	client := twilio.NewRestClient()
-
     params := &openapi.CreateMessageParams{}
-    params.SetTo(os.Getenv("TO_PHONE_NUMBER"))
+    params.SetTo(os.Getenv("TO_PHONE_NUMBER_JASON"))
     params.SetFrom(os.Getenv("TWILIO_PHONE_NUMBER"))
     params.SetBody(jokemsg)
-
     _, err := client.Api.CreateMessage(params)
     if err != nil {
         fmt.Println(err.Error())
     } else {
-        fmt.Println("SMS sent successfully!")
+        fmt.Println("SMS sent successfully to JASON!")
     }
-   }
+    }
+
+	func sms_carson(jokemsg string) {
+	// SMS stuff
+	  client := twilio.NewRestClient()
+	  params := &openapi.CreateMessageParams{}
+	  params.SetTo(os.Getenv("TO_PHONE_NUMBER_CARSON"))
+	  params.SetFrom(os.Getenv("TWILIO_PHONE_NUMBER"))
+	  params.SetBody(jokemsg)
+	
+		_, err := client.Api.CreateMessage(params)
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			fmt.Println("SMS sent successfully to CARSON!")
+		}
+	}
    
+	func sms_heather(jokemsg string) {
+		// SMS stuff
+		  client := twilio.NewRestClient()
+		  params := &openapi.CreateMessageParams{}
+		  params.SetTo(os.Getenv("TO_PHONE_NUMBER_HEATHER"))
+		  params.SetFrom(os.Getenv("TWILIO_PHONE_NUMBER"))
+		  params.SetBody(jokemsg)
+		
+			_, err := client.Api.CreateMessage(params)
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Println("SMS sent successfully to HEATHER!")
+			}
+		}
