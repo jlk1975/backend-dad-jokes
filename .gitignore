@@ -1,5 +1,7 @@
 # env file
 .env
+numbers.json
+__pycache__
 # binary
 main
 # Ansible
