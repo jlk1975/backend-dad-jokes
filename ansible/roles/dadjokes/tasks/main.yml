@@ -106,10 +106,8 @@
 - name: create cronjob
   cron:
     name: "run dad joke program"
-    minute: "48"
-    hour: "15"
-    # minute: "0"
-    # hour: "1"
+    minute: "0"
+    hour: "1"
     user: gpuser
     job: "cd ~/scripts;/usr/bin/python3 ./joke_report.py 2>&1 | tee -a ~/scripts/logs/joke_report.log" 
     

@@ -7,4 +7,4 @@
 ## Add Terraform Command here
 
 ## INFRA Setup
-## ansible-playbook -u root -i "45.79.175.228," ansible/playbook.yml
+## ansible-playbook -u root -i "<IP_ADDR>," ansible/playbook.yml
