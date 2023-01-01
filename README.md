@@ -9,6 +9,10 @@
 
 ## INFRA
 ## Add Terraform Command here
+- ```cd terraform```
+- ```terraform init```
+- ```terraform plan -var-file="secret.tfvars"```
+- ```terraform apply -var-file="secret.tfvars"```
 
 ## Software Installs & Code Deploys
 ## ansible-playbook -u root -i "<IP_ADDR>," ansible/playbook.yml
