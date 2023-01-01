@@ -2,7 +2,7 @@
 import json
 import os
 import requests
-import modules.sms
+import pymods.sms
 
 # Set the HTTP headers
 headers = {
@@ -29,5 +29,5 @@ contact_list = data["contacts"]
 
 for contact_record in contact_list:
     if contact_record['send_joke'] == "True":
-        sms_sid = modules.sms.send(account_sid, auth_token, joke, contact_record, twilio_from_number)
+        sms_sid = pymods.sms.send(account_sid, auth_token, joke, contact_record, twilio_from_number)
         print(sms_sid)

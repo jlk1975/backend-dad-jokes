@@ -36,9 +36,9 @@
     group: gpgroup
     mode: '0544'
 
-- name: create scripts/modules dir
+- name: create scripts/pymods dir
   file: 
-    name: /home/gpuser/scripts/modules
+    name: /home/gpuser/scripts/pymods
     state: directory
     owner: gpuser
     group: gpgroup
@@ -76,10 +76,10 @@
     group: gpgroup
     mode: '0544'
 
-- name: deploy scripts/modules/sms.py
+- name: deploy scripts/pymods/sms.py
   copy: 
-    src: ../modules/sms.py
-    dest: /home/gpuser/scripts/modules/sms.py
+    src: ../pymods/sms.py
+    dest: /home/gpuser/scripts/pymods/sms.py
     owner: gpuser
     group: gpgroup
     mode: '0544'
@@ -95,8 +95,8 @@
 - name: create cronjob
   cron:
     name: "run dad joke program"
-    minute: "0"
-    hour: "1"
+    minute: "11"  #0
+    hour: "17"    #1
     user: gpuser
     job: "cd ~/scripts;/usr/bin/python3 ./joke_report.py 2>&1 | tee -a ~/scripts/logs/joke_report.log" 
     
