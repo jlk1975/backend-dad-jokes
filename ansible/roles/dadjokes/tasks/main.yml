@@ -71,7 +71,7 @@
     state: touch
     owner: gpuser
     group: gpgroup
-    mode: '0544'
+    mode: '0744'
 
 # - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
 #   file:
@@ -106,7 +106,7 @@
 - name: create cronjob
   cron:
     name: "run dad joke program"
-    minute: "44"
+    minute: "48"
     hour: "15"
     # minute: "0"
     # hour: "1"
