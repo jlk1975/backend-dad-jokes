@@ -7,8 +7,7 @@
 - Consider repo rename from sms-reports to reports
 - Use some variables in your ansible
 
-## INFRA
-## Add Terraform Command here
+## INFRA Setup
 - ```cd terraform```
 - ```terraform init```
 - ```terraform plan -var-file="secret.tfvars"```
