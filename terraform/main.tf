@@ -14,6 +14,7 @@ provider "linode" {
 resource "linode_firewall" "my_firewall" {
   label = "my_firewall"
 
+
  inbound {
     label    = "allow-ssh"
     action   = "ACCEPT"
