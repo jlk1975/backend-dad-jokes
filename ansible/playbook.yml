@@ -1,4 +1,5 @@
 ---
-- hosts: gp_servers
+# - hosts: joke_servers
+- hosts: all
   roles:
     - dadjokes
