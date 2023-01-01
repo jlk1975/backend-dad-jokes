@@ -8,9 +8,10 @@ __pycache__
 main
 # Ansible
 ansible/inventory.yml
-# Local .terraform directories
-**/.terraform/*
 
+# Terraform 
+**/.terraform/*
+terraform/secret.tfvars
 # .tfstate files
 *.tfstate
 *.tfstate.*
