@@ -1,5 +1,12 @@
+# Tasks file for dad jokes
 ---
-# tasks file for dadjokes
+- name: "Update cache & Full system update"
+  apt:
+    update_cache: true
+    upgrade: dist
+    cache_valid_time: 3600
+    force_apt_get: true
+
 - name: Ensure group "gpgroup" exists
   group:
     name: gpgroup
@@ -12,53 +19,97 @@
     comment: General Purpose User
     group: gpgroup
 
-- name: Add go to .profile for gpuser
-  copy: 
-    src: gpuser_profile
-    dest: /home/gpuser/.profile
-
-- name: download golang
-  get_url:
-    url: https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz
-    dest: /tmp/go1.19.3.linux-amd64.tar.gz
-    
-- name: install golang
-  unarchive:
-    src: /tmp/go1.19.3.linux-amd64.tar.gz
-    dest: /usr/local
-    remote_src: yes
-
-# - name: Deploy env file
+# - name: Add go to .profile for gpuser
 #   copy: 
-#     src: ../../../.env
-#     dest: /home/gpuser/gocode/.env
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0400'
+#     src: gpuser_profile
+#     dest: /home/gpuser/.profile
 
-- name: create code dir
+- name: Install python3-pip
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install python pip package twilio
+  pip:
+    name: twilio
+
+- name: create scripts dir
   file: 
-    name: /home/gpuser/gocode
+    name: /home/gpuser/scripts
     state: directory
     owner: gpuser
     group: gpgroup
     mode: '0544'
 
-# - name: deploy go code
-#   copy: 
-#     src: ../../../main
-#     dest: /home/gpuser/gocode
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
+- name: create scripts/modules dir
+  file: 
+    name: /home/gpuser/scripts/modules
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
-# example
-# 40 0 * * * . /home/gpuser/gocode/.env;/home/gpuser/gocode/main >> /tmp/main.log
+- name: create scripts/data dir
+  file: 
+    name: /home/gpuser/scripts/data
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: create scripts/logs dir
+  file: 
+    name: /home/gpuser/scripts/logs
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: create scripts/logs/joke_report.log file
+  file: 
+    path: /home/gpuser/scripts/logs/joke_report.log
+    state: touch
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+# - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
+#   file:
+#     path: /etc/foo.conf
+#     state: touch
+#     mode: u=rw,g=r,o=r
+
+- name: deploy joke_report.py
+  copy: 
+    src: ../joke_report.py
+    dest: /home/gpuser/scripts
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: deploy scripts/modules/sms.py
+  copy: 
+    src: ../modules/sms.py
+    dest: /home/gpuser/scripts/modules/sms.py
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+
+- name: deploy scripts/data/joke_data.json
+  copy: 
+    src: ../data/joke_data.json
+    dest: /home/gpuser/scripts/data/joke_data.json
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
+ 
 - name: create cronjob
   cron:
     name: "run dad joke program"
-    minute: "0"
-    hour: "1"
+    minute: "44"
+    hour: "15"
+    # minute: "0"
+    # hour: "1"
     user: gpuser
-    job: ". /home/gpuser/gocode/.env;/home/gpuser/gocode/main >> /tmp/main.log"
-
+    job: "cd ~/scripts;/usr/bin/python3 ./joke_report.py 2>&1 | tee -a ~/scripts/logs/joke_report.log" 
+    
