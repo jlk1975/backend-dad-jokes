@@ -1,6 +1,7 @@
 # env file
 .env
 numbers.json
+data.json
 __pycache__
 # binary
 main
