@@ -6,7 +6,9 @@ import emoji
 import pymods.sms
 
 # Emoji setup
-joke_emoji = emoji.emojize(":rolling_on_the_floor_laughing:")
+rofl_emoji = emoji.emojize(":rolling_on_the_floor_laughing:")
+poo_emoji = emoji.emojize(":pile_of_poo:")
+joke_emojis = rofl_emoji + poo_emoji
 
 # Set the HTTP headers
 headers = {
@@ -20,7 +22,7 @@ url = "https://icanhazdadjoke.com"
 # Send the request to the API endpoint
 response = requests.get(url, headers=headers)
 data = response.json()
-joke = joke_emoji + " " + data['joke']
+joke = joke_emojis + " " + data['joke']
 
 with open('data/joke_data.json') as f:
     data = json.load(f)
