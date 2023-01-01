@@ -2,7 +2,7 @@
 import json
 import os
 import requests
-import sms
+import modules.sms
 
 # Set the HTTP headers
 headers = {
@@ -18,7 +18,7 @@ response = requests.get(url, headers=headers)
 data = response.json()
 joke = data['joke']
 
-with open('data.json') as f:
+with open('data/joke_data.json') as f:
     data = json.load(f)
 
 # Twilio setup
@@ -29,5 +29,5 @@ contact_list = data["contacts"]
 
 for contact_record in contact_list:
     if contact_record['send_joke'] == "True":
-        sms_sid = sms.send(account_sid, auth_token, joke, contact_record, twilio_from_number)
+        sms_sid = modules.sms.send(account_sid, auth_token, joke, contact_record, twilio_from_number)
         print(sms_sid)

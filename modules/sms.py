@@ -1,5 +1,6 @@
 from twilio.rest import Client
 
+
 def send(account_sid, auth_token, joke, contact_record, twilio_from_number):
     recipient = contact_record['name']
     recipient_number = contact_record['number']

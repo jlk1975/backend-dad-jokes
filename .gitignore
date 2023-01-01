@@ -2,6 +2,7 @@
 .env
 numbers.json
 data.json
+data/**
 __pycache__
 # binary
 main
