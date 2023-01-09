@@ -1,165 +1,107 @@
 # Tasks file for dad jokes
 ---
 
+- name: "Update cache & Full system update"
+  apt:
+    update_cache: true
+    upgrade: dist
+    cache_valid_time: 3600
+    force_apt_get: true
 
-- name: Set Disk Size
-  set_fact:
-    disk_size: "{{ hostvars[inventory_hostname]['disk_size'] }}"
+- name: Ensure group "gpgroup" exists
+  group:
+    name: gpgroup
+    state: present
 
-- name: Print Disk Size
-  debug:
-    msg: "Disk Size: {{ disk_size }}"
+- name: Add the user "gpuser"  
+  user:
+    name: gpuser
+    state: present
+    comment: General Purpose User
+    group: gpgroup
 
-- name: Set MSE Disk Size
-  set_fact:
-    mse_disk_size: "{{ hostvars[inventory_hostname]['mse_disk_size'] }}"
+- name: Install python3-pip
+  apt:
+    name: python3-pip
+    state: present
 
-- name: Print MSE Disk Size
-  debug:
-    msg: "Disk Size: {{ mse_disk_size }}"
+- name: Install python pip package twilio
+  pip:
+    name: twilio
 
-# - name: Hello
-#   debug:
-#     msg: "YOOOOOOOOOOOOOOOOOOOOOO"
+- name: Install python pip package emoji
+  pip:
+    name: emoji
 
-# - name: Print HTTP port
-#   debug:
-#     msg: "Disk Size: {{ hostvars[inventory_hostname]['disk_size'] }}"
-    
-# - name: Print HTTP port
-#   debug:
-#     msg: "MSE Disk Size: {{ hostvars[inventory_hostname]['mse_disk_size'] }}"
+- name: create scripts dir
+  file: 
+    name: /home/gpuser/scripts
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
-#  - name: Print HTTP port
-#    debug:
-#      msg: "FOR REAL THIS IS HOSTVARS: {{ hostvars[inventory_hostname] }}"
+- name: create scripts/pymods dir
+  file: 
+    name: /home/gpuser/scripts/pymods
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
+- name: create scripts/data dir
+  file: 
+    name: /home/gpuser/scripts/data
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
-# - name: Print HTTP port
-#   debug:
-#     msg: "HTTP port: {{ hostvars['192.168.1.100']"
+- name: create scripts/logs dir
+  file: 
+    name: /home/gpuser/scripts/logs
+    state: directory
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
+- name: create scripts/logs/joke_report.log file
+  file: 
+    path: /home/gpuser/scripts/logs/joke_report.log
+    state: touch
+    owner: gpuser
+    group: gpgroup
+    mode: '0744'
 
-# - name: Load variables
-#   include_vars: "../../../vars/vars.yml"
+- name: deploy joke_report.py
+  copy: 
+    src: ../joke_report.py
+    dest: /home/gpuser/scripts
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
-# - name: Print HTTP port
-#   debug:
-#     #msg: "HTTP port: {{ hostvars[inventory_hostname]['http_port'] }}"
-#     msg: "{{ hostvars[inventory_hostname] }}"
+- name: deploy scripts/pymods/sms.py
+  copy: 
+    src: ../pymods/sms.py
+    dest: /home/gpuser/scripts/pymods/sms.py
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
 
-# - name: Testing vars
-#   debug:
-#     msg: "testing.........."
-#     #msg: "{{ var_one }}"
-
-# - name: Print cache disk size
-#   debug:
-#     msg: "{{ hostvars[inventory_hostname] }}"
-#     #msg: "Cache Disk Size: {{ hostvars[inventory_hostname]['mse_disk_size'] }}"
-
-#   put all this back later
-# - name: "Update cache & Full system update"
-#   apt:
-#     update_cache: true
-#     upgrade: dist
-#     cache_valid_time: 3600
-#     force_apt_get: true
-
-# - name: Ensure group "gpgroup" exists
-#   group:
-#     name: gpgroup
-#     state: present
-
-# - name: Add the user "gpuser"  
-#   user:
-#     name: gpuser
-#     state: present
-#     comment: General Purpose User
-#     group: gpgroup
-
-# - name: Install python3-pip
-#   apt:
-#     name: python3-pip
-#     state: present
-
-# - name: Install python pip package twilio
-#   pip:
-#     name: twilio
-
-# - name: Install python pip package emoji
-#   pip:
-#     name: emoji
-
-# - name: create scripts dir
-#   file: 
-#     name: /home/gpuser/scripts
-#     state: directory
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: create scripts/pymods dir
-#   file: 
-#     name: /home/gpuser/scripts/pymods
-#     state: directory
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: create scripts/data dir
-#   file: 
-#     name: /home/gpuser/scripts/data
-#     state: directory
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: create scripts/logs dir
-#   file: 
-#     name: /home/gpuser/scripts/logs
-#     state: directory
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: create scripts/logs/joke_report.log file
-#   file: 
-#     path: /home/gpuser/scripts/logs/joke_report.log
-#     state: touch
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0744'
-
-# - name: deploy joke_report.py
-#   copy: 
-#     src: ../joke_report.py
-#     dest: /home/gpuser/scripts
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: deploy scripts/pymods/sms.py
-#   copy: 
-#     src: ../pymods/sms.py
-#     dest: /home/gpuser/scripts/pymods/sms.py
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
-
-# - name: deploy scripts/data/joke_data.json
-#   copy: 
-#     src: ../data/joke_data.json
-#     dest: /home/gpuser/scripts/data/joke_data.json
-#     owner: gpuser
-#     group: gpgroup
-#     mode: '0544'
+- name: deploy scripts/data/joke_data.json
+  copy: 
+    src: ../../../../data/joke_data.json
+    dest: /home/gpuser/scripts/data/joke_data.json
+    owner: gpuser
+    group: gpgroup
+    mode: '0544'
  
-# - name: create cronjob
-#   cron:
-#     name: "run dad joke program"
-#     minute: "0" #0
-#     hour: "1"   #1
-#     user: gpuser
-#     job: "cd ~/scripts;/usr/bin/python3 ./joke_report.py 2>&1 | tee -a ~/scripts/logs/joke_report.log" 
+- name: create cronjob
+  cron:
+    name: "run dad joke program"
+    minute: "0" #0
+    hour: "1"   #1
+    user: gpuser
+    job: "cd ~/scripts;/usr/bin/python3 ./joke_report.py 2>&1 | tee -a ~/scripts/logs/joke_report.log" 
     

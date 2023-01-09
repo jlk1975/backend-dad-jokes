@@ -1,5 +1,5 @@
 ---
 - name: Run jokes
-  hosts: app
+  hosts: all 
   roles:
     - dadjokes

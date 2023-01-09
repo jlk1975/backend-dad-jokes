@@ -14,4 +14,4 @@
 - ```terraform apply -var-file="secret.tfvars"```
 
 ## Software Installs & Code Deploys
-- ```ansible-playbook -u root -i "<IP_ADDR>," ansible/playbook.yml```
+- ```ansible-playbook -u root -i "root@<IP_ADDR>," ansible/playbook.yml```
