@@ -1,5 +1,5 @@
 ---
-# - hosts: joke_servers
-- hosts: all
+- name: Run jokes
+  hosts: app
   roles:
     - dadjokes
